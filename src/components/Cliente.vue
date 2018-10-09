@@ -1,11 +1,12 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
-    <v-text-field v-model="nome" label="Nome"></v-text-field>
-    <v-text-field v-model="email" label="E-mail"></v-text-field>
-    <v-text-field v-model="telefone" label="Telefone"></v-text-field>
-    <v-text-field v-model="cpf" label="CPF"></v-text-field>
-    <v-text-field v-model="senha" label="Senha" type="password"></v-text-field>
-    <v-text-field v-model="confirmarSenha" label="Confirmar Senha" type="password"></v-text-field>
+    <v-text-field v-model="modelo" label="Modelo"></v-text-field>
+    <v-text-field v-model="ano" label="Ano"></v-text-field>
+    <v-text-field v-model="kilometragem" label="Kilemetragem"></v-text-field>
+    <v-text-field v-model="combustivel" label="Combustivel"></v-text-field>
+    <v-text-field v-model="cor" label="Cor"></v-text-field>
+    <v-text-field v-model="conservacao" label="Estado de Conservação"></v-text-field>
+    <v-text-field v-model="obs" label="Observações"></v-text-field>
 
 
     <v-btn @click="salvar">
@@ -19,29 +20,28 @@
   import API from '@/lib/HttpRequest'
   export default {
     data: () => ({
-      cliente: {},
+      carro: {},
       valid: true,
-      nome: '',
-      email: '',
-      telefone: '',
-      cpf: '',
-      senha: '',
-      confirmarSenha: ''
+      modelo: '',
+      ano: '',
+      kilometragem: '',
+      combustivel: '',
+      cor: '',
+      conservacao: '',
+      obs: ''
     }),
 
     methods: {
       salvar() {
-        if (this.senha === this.confirmarSenha) {
-          this.cliente.nome = this.nome
-          this.cliente.email = this.email
-          this.cliente.telefone = this.telefone
-          this.cliente.cpf = this.cpf
-          this.cliente.senha = this.senha
+          this.carro.modelo = this.modelo
+          this.carro.ano = this.ano
+          this.carro.kilometragem = this.kilometragem
+          this.carro.combustivel = this.combustivel
+          this.carro.cor = this.cor
+          this.carro.conservacao = this.conservacao
+          this.carro.obs = this.obs
 
-          API.salvarCliente(this.cliente)
-        } else {
-          alert("Senhas não coincidem")
-        }
+          API.salvarCarro(this.carro)
       },
         cancelar() {
     this.$refs.form.reset()

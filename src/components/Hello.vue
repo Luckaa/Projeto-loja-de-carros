@@ -4,7 +4,7 @@
       <v-layout column align-center>
 
         <div>
-          <h2>Bem-vindo ao Admin da Loja de CaAAAArros</h2>
+          <h2>Bem-vindo ao Admin da Loja de Carros</h2>
         </div>
 
         <div>

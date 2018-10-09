@@ -11,8 +11,8 @@ export default {
     return fetch(API_URL + "estabelecimento")
       .then(response => response.json())
   },
-  salvarCliente(cliente) {
-    return axios.post(API_URL + "cliente", cliente)
+  salvarCarro(carro) {
+    return axios.post(API_URL + "carro", carro)
       .then(response => response.data)
   },
   getUsuario(usuario) {
