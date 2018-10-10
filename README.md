@@ -1,4 +1,4 @@
-# app-shopping-ht
+# app-loja-de-carros
 
 > A Vuetify project running in Cordova
 

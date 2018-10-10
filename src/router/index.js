@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import Cliente from '@/components/Cliente'
+import Carro from '@/components/Carro'
 
 
 Vue.use(Router)
@@ -13,29 +13,10 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/produtos',
-      name: 'Produtos',
-      component: Produtos
+      path: '/carro',
+      name: 'Carro',
+      component: Carro
     },
-    {
-      path: '/estabelecimentos',
-      name: 'Estabelecimentos',
-      component: Estabelecimentos
-    },
-    {
-      path: '/carrinho',
-      name: 'Carrinho',
-      component: Carrinho
-    },
-    {
-      path: '/cliente',
-      name: 'Cliente',
-      component: Cliente
-    },
-    {
-      path: '/area_pagamento',
-      name: 'AreaPagamento',
-      component: AreaPagamento
-    }
+
   ]
 })

@@ -33,6 +33,7 @@
 
     methods: {
       salvar() {
+          this.carro.foto = this.foto
           this.carro.modelo = this.modelo
           this.carro.ano = this.ano
           this.carro.kilometragem = this.kilometragem

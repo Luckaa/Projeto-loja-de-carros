@@ -1,8 +1,8 @@
 {
-  "name": "app-shopping-ht",
+  "name": "loja-de-carro-adm",
   "version": "1.0.0",
   "description": "A Vuetify project running in Cordova",
-  "author": "Vinícius Souza <viniciuspodi@gmail.com>",
+  "author": "Lucas Felipe <lucasilva137@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
