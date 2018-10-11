@@ -40,21 +40,6 @@
             name: '/'
           },
           {
-            icon: 'location_city',
-            title: 'Estabelecimentos',
-            name: 'estabelecimentos'
-          },
-          {
-            icon: 'shopping_cart',
-            title: 'Carrinho',
-            name: 'carrinho'
-          },
-          {
-            icon: 'lock',
-            title: 'Login',
-            name: 'login'
-          },
-          {
             icon: 'add_circle_outline',
             title: 'Adicionar Carro',
             name: 'carro'
