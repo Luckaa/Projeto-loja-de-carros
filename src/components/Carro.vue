@@ -1,14 +1,14 @@
 <template>
   <div>
     <div style="padding:10px" >
-      <v-btn color="info" v-if="!mostrarForm" @click="exibirForm">Adicionar Carro</v-btn>
+      <v-btn color="info" v-if="!mostrarForm" @click="exibirForm">Adicionar carros</v-btn>
     </div>
 
-    <v-dialog v-model="mostrarForm" width="500"  >
+    <v-dialog v-model="mostrarForm" width="500"  > carro
 
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
-          Adicionar Carro
+          Adicionar carros
         </v-card-title>
 
         <!-- Formulario -->
@@ -34,19 +34,24 @@
 
     <v-data-table :headers="headers" :items="carros" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
-        <td>{{ props.carro.nome }}</td>
-        <td class="text-xs-left">{{ props.carro.descricao }}</td>
-        <td class="text-xs-left">R$ {{ (props.carro.valor).toFixed(2) }}</td>
-        <td class="text-xs-left">
-          <img style="width:80px;height:80px;overflow:hidden" :src="props.carro.foto">
-        </td>
+         
+      
+        <td class="text-xs-left">{{ props.items.ano }}</td>
+        <td class="text-xs-left"> {{ (props.items.combustivel).toFixed(2) }}</td>
+        <td class="text-xs-left"> {{ (props.items.conservacao)}}</td>
+        <td class="text-xs-left"> {{ (props.items.cor)}}</td>
+        <td class="text-xs-left"><img style="width:80px;height:80px;overflow:hidden" :src="props.items.foto"></td>
+        <td class="text-xs-left"> {{ (props.items.kilometragem) }}</td>
+        <td class="text-xs-left"> {{ (props.items.modelo)}}</td>
+        <td class="text-xs-left"> {{ (props.items.obs)}}</td>
+    
         <td>
           <v-flex>
             <v-btn flat icon color="red">
-              <v-icon  @click="deletarCarro(props.carro); console.log('guribom')">delete</v-icon>
+              <v-icon  @click="deletarCarro(props.items); console.log('guribom')">delete</v-icon>
             </v-btn>
             <v-btn flat icon color="blue">
-              <v-icon @click="editarCarro(props.carro)">edit</v-icon>
+              <v-icon @click="editarCarro(props.items)">edit</v-icon>
             </v-btn>
           </v-flex>
         </td>
@@ -58,7 +63,7 @@
 </template>
 
 <script>
-  import API from '@/lib/API';
+  import API from '../lib/API';
   export default {
 
     mounted() {
@@ -69,31 +74,32 @@
       load() {
         API.getCarros().then(carro => {
           this.carro = carro;
+          console.log(carro)
         });
       },
 
       submit() {
         if (this.carro._id == null) {
           if (this.$refs.form.validate()) {
-            API.adicionarCarro(this.carro)
+            API.adicionarCarros(this.carro)
               .then(response => {
                 if (response) {
                   this.alerta("Carro salvo com Sucesso!", "success");
                 } else {
-                  this.alerta("Erro ao salvar carro!", "error");
+                  this.alerta("Erro ao salvar carros!", "error");
                 }
                 this.clear()
                 this.load()
-              });
+              }).cath(console.log);
           }
-        } else {
+        }else {
           if (this.$refs.form.validate()) {
-            API.editarCarro(this.carro)
+            API.editarCarros(this.carros)
               .then(response => {
                 if (response) {
-                  this.alerta("Carro editado com Sucesso!", "success");
+                  this.alerta("carros editado com Sucesso!", "success");
                 } else {
-                  this.alerta("Erro ao editar carro!", "error");
+                  this.alerta("Erro ao editar carros!", "error");
                 }
                 this.clear()
                 this.load()
@@ -112,30 +118,30 @@
         this.mostrarForm = !this.mostrarForm;
       },
 
-      deletarCarro(carro) {
+      deletarCarros(carro) {
         console.log(carro);
-        API.deletarCarro(carro)
+        API.deletarCarros(carro)
           .then(response => {
             if (response) {
-              this.alerta("carro removido com Sucesso!", "success");
+              this.alerta("carros removido com Sucesso!", "success");
               this.load()
             } else {
-              this.alerta("Erro ao remover carro!", "error");
+              this.alerta("Erro ao remover carros!", "error");
             }
           });
       },
 
-      editarcarro(carro) {
-        this.carro = carro;
+      editarCarros(carros) {
+        this.carros = carros; 
         this.mostrarForm = true;
       },
 
-      confirmarExclusao(flag, carro) {
+      confirmarExclusao(flag, carros) {
         console.log(flag);
-        console.log(carro);
+        console.log(carros);
 
         if (flag) {
-          this.deletarcarro(carro);
+          this.deletarcarros(carros);
         }
         this.dialog = false;
       },
@@ -157,39 +163,47 @@
         dialog: false,
         mostrarForm: false,
         headers: [{
-            text: 'Foto',
-            value: 'foto'
-          },
-          {
-            text: 'Modelo',
-            value: 'modelo'
-          },
-          {
             text: 'Ano',
             value: 'ano'
-          },
-          {
-            text: 'Quilometragem',
-            value: 'quilometragem'
           },
           {
             text: 'Combustivel',
             value: 'combustivel'
           },
-            {
-            text: 'Cor',
-            value: 'cor'
-          },
-            {
-            text: 'Conservação',
+          {
+            text: 'conservacao',
             value: 'conservacao'
           },
+          {
+            text: 'cor',
+            value: 'cor'
+          },
+          {
+            text: 'foto',
+            value: 'foto'
+          },
+            {
+            text: 'kilometragem',
+            value: 'kilometragem'
+          },
+            {
+            text: 'modelo',
+            value: 'modelo'
+          },
+          {
+            text: 'obs',
+            value: 'obs'
+          },
+          {
+            text: 'Ações',
+            value: ''
+          }
         ],
         carros: [],
         valid: true,
         nomeRules: [
           v => !!v || 'Nome é Obrigatório!',
-          v => (v && v.length <= 30) || 'Nome deve ter no máximo 30 characters!'
+          v => (v && v.length <= 5000) || 'Nome deve ter no máximo 1000 characters!'
         ]
       }
     }

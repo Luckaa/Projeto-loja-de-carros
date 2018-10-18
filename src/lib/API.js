@@ -3,11 +3,11 @@ import axios from 'axios';
 
 export default {
 
-  //ProdutosS
+  //Carros
 
   getCarros() {
     return fetch(API_URL + "carros")
-      .then(response => response.json())
+      .then(response => response.json(0))
   },
 
   deletarCarros(carro) {
@@ -18,7 +18,7 @@ export default {
       .then(response => response.data)
   },
 
-  adicionarCarro(carro) {
+  adicionarCarros(carro) {
     return axios.post(API_URL + "carros", carro)
       .then(response => response.data)
   },
