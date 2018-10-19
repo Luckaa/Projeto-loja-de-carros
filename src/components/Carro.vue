@@ -3,8 +3,9 @@
     <div style="padding:10px" >
       <v-btn color="info" v-if="!mostrarForm" @click="exibirForm">Adicionar carros</v-btn>
     </div>
-
-    <v-dialog v-model="mostrarForm" width="500"  > carro
+    
+  
+    <v-dialog v-model="mostrarForm" width="500"  > 
 
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
@@ -12,6 +13,7 @@
         </v-card-title>
 
         <!-- Formulario -->
+        
 
         <v-form ref="form" v-if="mostrarForm" v-model="valid" lazy-validation style="padding:10px">
           <v-text-field v-model="carro.foto" :rules="nomeRules" :counter="30" label="Foto" required></v-text-field>
@@ -34,21 +36,22 @@
 
     <v-data-table :headers="headers" :items="carros" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
-         
+         <!-- {{items}} -->
+         <!-- {{props}} -->
       
-        <td class="text-xs-left">{{ props.items.ano }}</td>
-        <td class="text-xs-left"> {{ (props.items.combustivel).toFixed(2) }}</td>
-        <td class="text-xs-left"> {{ (props.items.conservacao)}}</td>
-        <td class="text-xs-left"> {{ (props.items.cor)}}</td>
-        <td class="text-xs-left"><img style="width:80px;height:80px;overflow:hidden" :src="props.items.foto"></td>
-        <td class="text-xs-left"> {{ (props.items.kilometragem) }}</td>
-        <td class="text-xs-left"> {{ (props.items.modelo)}}</td>
-        <td class="text-xs-left"> {{ (props.items.obs)}}</td>
+        <td class="text-xs-left">{{ props.item.ano }}</td>
+        <td class="text-xs-left"> {{ props.item.combustivel }}</td>
+        <td class="text-xs-left"> {{ (props.item.conservacao)}}</td>
+        <td class="text-xs-left"> {{ (props.item.cor)}}</td>
+        <td class="text-xs-left"><img style="width:80px;height:80px;overflow:hidden" :src="props.item.foto"></td>
+        <td class="text-xs-left"> {{ (props.item.kilometragem) }}</td>
+        <td class="text-xs-left"> {{ (props.item.modelo)}}</td>
+        <td class="text-xs-left"> {{ (props.item.obs)}}</td>
     
         <td>
           <v-flex>
             <v-btn flat icon color="red">
-              <v-icon  @click="deletarCarro(props.items); console.log('guribom')">delete</v-icon>
+              <v-icon  @click="deletarCarro(props.items);">delete</v-icon>
             </v-btn>
             <v-btn flat icon color="blue">
               <v-icon @click="editarCarro(props.items)">edit</v-icon>
@@ -72,34 +75,36 @@
 
     methods: {
       load() {
-        API.getCarros().then(carro => {
-          this.carro = carro;
-          console.log(carro)
+        API.getCarros().then(carros => {
+          this.carros = carros;
+          console.log(carros);
+          
         });
       },
 
-      submit() {
+         submit() {
+
         if (this.carro._id == null) {
           if (this.$refs.form.validate()) {
             API.adicionarCarros(this.carro)
               .then(response => {
                 if (response) {
-                  this.alerta("Carro salvo com Sucesso!", "success");
+                  console.log("carro salvo com Sucesso!", "success");
                 } else {
-                  this.alerta("Erro ao salvar carros!", "error");
+                  console.log("Erro ao salvar carro!", "error");
                 }
                 this.clear()
                 this.load()
-              }).cath(console.log);
+              });
           }
-        }else {
+        } else {
           if (this.$refs.form.validate()) {
-            API.editarCarros(this.carros)
+            API.editarCarros(this.carro)
               .then(response => {
                 if (response) {
-                  this.alerta("carros editado com Sucesso!", "success");
+                  this.alerta("carro editado com Sucesso!", "success");
                 } else {
-                  this.alerta("Erro ao editar carros!", "error");
+                  this.alerta("Erro ao editar carro!", "error");
                 }
                 this.clear()
                 this.load()
@@ -118,8 +123,8 @@
         this.mostrarForm = !this.mostrarForm;
       },
 
-      deletarCarros(carro) {
-        console.log(carro);
+      deletarCarro(carro) {
+        console.log("teste");
         API.deletarCarros(carro)
           .then(response => {
             if (response) {
@@ -131,7 +136,7 @@
           });
       },
 
-      editarCarros(carros) {
+      editarCarro(carros) {
         this.carros = carros; 
         this.mostrarForm = true;
       },
@@ -141,7 +146,7 @@
         console.log(carros);
 
         if (flag) {
-          this.deletarcarros(carros);
+          this.deletarCarro(carros);
         }
         this.dialog = false;
       },
