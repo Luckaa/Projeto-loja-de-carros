@@ -3,8 +3,16 @@
     <div style="padding:10px" >
       <v-btn color="info" v-if="!mostrarForm" @click="exibirForm">Adicionar carros</v-btn>
     </div>
-    
-  
+      <v-dialog v-model="excluirMesmo" width="500"  > 
+              <v-card>
+                  <v-card-title class="headline">Deseja mesmo excluir esse carro?</v-card-title>
+                  <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="green darken-1" flat @click.native="dialog = false">Disagree</v-btn>
+                  <v-btn color="green darken-1" flat @click.native="dialog = false">Agree</v-btn>
+                  </v-card-actions>
+              </v-card>
+      </v-dialog>
     <v-dialog v-model="mostrarForm" width="500"  > 
 
       <v-card>
@@ -34,6 +42,7 @@
       </v-card>
     </v-dialog>
 
+
     <v-data-table :headers="headers" :items="carros" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
          <!-- {{items}} -->
@@ -50,9 +59,10 @@
     
         <td>
           <v-flex>
-            <v-btn flat icon color="red">
-              <v-icon  @click="deletarCarro(props.items);">delete</v-icon>
+            <v-btn flat icon color="black" v-if="!excluirMesmo" @click="exibirExcluir">
+              <v-icon v-model="excluirMesmo">delete</v-icon>
             </v-btn>
+
             <v-btn flat icon color="blue">
               <v-icon @click="editarCarro(props.items)">edit</v-icon>
             </v-btn>
@@ -122,6 +132,9 @@
       exibirForm() {
         this.mostrarForm = !this.mostrarForm;
       },
+      exibirExcluir() {
+        this.excluirMesmo = !this.excluirMesmo;
+      },
 
       deletarCarro(carro) {
         console.log("teste");
@@ -167,6 +180,7 @@
         carro: {},
         dialog: false,
         mostrarForm: false,
+        excluirMesmo: false,
         headers: [{
             text: 'Ano',
             value: 'ano'
