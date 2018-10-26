@@ -53,8 +53,8 @@
             </v-btn>
 
 
-            <v-btn flat icon color="blue">
-              <v-icon @click="editarCarro(props.items)">edit</v-icon>
+            <v-btn flat icon color="blue" @click="editarCarro(props.item)">
+              <v-icon>edit</v-icon>
             </v-btn>
           </v-flex>
         </td>
@@ -80,11 +80,9 @@
 <script>
   import API from '../lib/API';
   export default {
-
     mounted() {
       this.load();
     },
-
     methods: {
       load() {
         API.getCarros().then(carros => {
@@ -93,9 +91,7 @@
           
         });
       },
-
          submit() {
-
         if (this.carro._id == null) {
           if (this.$refs.form.validate()) {
             API.adicionarCarros(this.carro)
@@ -123,21 +119,17 @@
               });
           }
         }
-
       },
-
       clear() {
         this.$refs.form.reset()
         this.exibirForm();
       },
-
       exibirForm() {
         this.mostrarForm = !this.mostrarForm;
       },
       exibirExcluir() {
         this.excluirMesmo = !this.excluirMesmo;
       },
-
       deletarCarro(carro) {
         console.log(carro)
         this.exibirExcluir()
@@ -151,13 +143,11 @@
             }
           });
       },
-
-      editarCarro(carros) {
-        this.carros = carros; 
+      editarCarro(carro) {
+        this.carro = carro; 
         this.mostrarForm = true;
       },
     },
-
     data() {
       return {
         carro: {},
@@ -206,12 +196,8 @@
       }
     }
   }
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-
 </style>
-
