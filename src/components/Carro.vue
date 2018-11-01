@@ -14,8 +14,8 @@
         <!-- Formulario -->
         
 
-        <v-form ref="form" v-if="mostrarForm" v-model="valid" lazy-validation style="padding:10px">
-          <v-text-field v-model="carro.foto" label="Foto" required></v-text-field>
+        <v-form ref="form" v-if="mostrarForm" v-model="valid"  persistent lazy-validation style="padding:10px">
+          <v-text-field v-model="carro.foto" label="Foto" type="file" @change="onFileSelected" required></v-text-field>
           <v-text-field v-model="carro.modelo" label="Modelo" required></v-text-field>
           <v-text-field v-model="carro.ano" label="Ano" required></v-text-field>
           <v-text-field v-model="carro.kilometragem" label="Quilometragem" required></v-text-field>
@@ -59,7 +59,7 @@
           </v-flex>
         </td>
 
-          <v-dialog v-model="excluirMesmo" width="300"  > 
+          <v-dialog  persistent v-model="excluirMesmo" width="300"  > 
               <v-card>
                   <v-card-title class="headline">Deseja mesmo excluir esse carro?</v-card-title>
                   <v-card-actions>
@@ -147,6 +147,12 @@
         this.carro = carro; 
         this.mostrarForm = true;
       },
+        onFileSelected(event){
+      console.log(event)
+
+
+    }
+   
     },
     data() {
       return {

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import Carro from '@/components/Carro'
+import AdicionarCarro from '@/components/AdicionarCarro'
 
 
 Vue.use(Router)
@@ -17,6 +18,12 @@ export default new Router({
       name: 'Carro',
       component: Carro
     },
+    {
+      path: '/addcarro',
+      name: 'AdicionarCarro',
+      component: AdicionarCarro
+  },
+
 
   ]
 })

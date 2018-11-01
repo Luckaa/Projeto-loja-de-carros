@@ -43,8 +43,14 @@
             icon: 'add_circle_outline',
             title: 'Adicionar Carro',
             name: 'carro'
+          },
+            {
+            icon: 'add_circle_outline',
+            title: 'Adicionar Carro',
+            name: 'addcarro'
           }
         ],
+
         miniVariant: false,
       }
     },
