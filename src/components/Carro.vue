@@ -14,8 +14,8 @@
         <!-- Formulario -->
         
 
+          <input  @change="onFileSelected" multiple type="file" ></input>
         <v-form ref="form" v-if="mostrarForm" v-model="valid"  persistent lazy-validation style="padding:10px">
-          <v-text-field v-model="carro.foto" label="Foto" type="file" @change="onFileSelected" required></v-text-field>
           <v-text-field v-model="carro.modelo" label="Modelo" required></v-text-field>
           <v-text-field v-model="carro.ano" label="Ano" required></v-text-field>
           <v-text-field v-model="carro.kilometragem" label="Quilometragem" required></v-text-field>
@@ -78,130 +78,128 @@
   </div>
 </template>
 <script>
-  import API from '../lib/API';
-  export default {
-    mounted() {
-      this.load();
+import API from "../lib/API";
+export default {
+  mounted() {
+    this.load();
+  },
+  methods: {
+    onFileSelected(event) {
+      console.log(event);
     },
-    methods: {
-      load() {
-        API.getCarros().then(carros => {
-          this.carros = carros;
-          console.log(carros);
-          
-        });
-      },
-         submit() {
-        if (this.carro._id == null) {
-          if (this.$refs.form.validate()) {
-            API.adicionarCarros(this.carro)
-              .then(response => {
-                if (response) {
-                  console.log("carro salvo com Sucesso!", "success");
-                } else {
-                  console.log("Erro ao salvar carro!", "error");
-                }
-                this.clear()
-                this.load()
-              });
-          }
-        } else {
-          if (this.$refs.form.validate()) {
-            API.editarCarros(this.carro)
-              .then(response => {
-                if (response) {
-                  console.log("carro editado com Sucesso!", "success");
-                } else {
-                  console.log("Erro ao editar carro!", "error");
-                }
-                this.clear()
-                this.load()
-              });
-          }
-        }
-      },
-      clear() {
-        this.$refs.form.reset()
-        this.exibirForm();
-      },
-      exibirForm() {
-        this.mostrarForm = !this.mostrarForm;
-      },
-      exibirExcluir() {
-        this.excluirMesmo = !this.excluirMesmo;
-      },
-      deletarCarro(carro) {
-        console.log(carro)
-        this.exibirExcluir()
-        API.deletarCarros(carro)
-        .then(response => {
+    load() {
+      API.getCarros().then(carros => {
+        this.carros = carros;
+        console.log(carros);
+      });
+    },
+    submit() {
+      if (this.carro._id == null) {
+        if (this.$refs.form.validate()) {
+          API.adicionarCarros(this.carro).then(response => {
             if (response) {
-              console.log("Carro removido com Sucesso!", "success");
-              this.load()
+              console.log("carro salvo com Sucesso!", "success");
             } else {
-              console.log("Erro ao remover carro!", "error");
+              console.log("Erro ao salvar carro!", "error");
             }
+            this.clear();
+            this.load();
           });
-      },
-      editarCarro(carro) {
-        this.carro = carro; 
-        this.mostrarForm = true;
-      },
-        onFileSelected(event){
-      console.log(event)
-
-
-    }
-   
-    },
-    data() {
-      return {
-        carro: {},
-        carros: [],
-        valid: true,
-        dialog: false,
-        mostrarForm: false,
-        excluirMesmo: false,
-        headers: [{
-            text: 'Modelo',
-            value: 'modelo'
-          },
-          {
-            text: 'Ano',
-            value: 'ano'
-          },
-          {
-            text: 'Combustivel',
-            value: 'combustivel'
-          },
-          {
-            text: 'Quilometragem',
-            value: 'kilometragem'
-          },
-          {
-            text: 'Cor',
-            value: 'cor'
-          },
-            {
-            text: 'Conservação',
-            value: 'conservacao'
-          },
-            {
-            text: 'Foto',
-            value: 'foto'
-          },
-          {
-            text: 'Ações',
-            value: ''
-          }
-        ],
-        nomeRules: [
-          v => !!v || 'Nome é Obrigatório!',
-          v => (v && v.length <= 5000) || 'Nome deve ter no máximo 1000 characters!'
-        ]
+        }
+      } else {
+        if (this.$refs.form.validate()) {
+          API.editarCarros(this.carro).then(response => {
+            if (response) {
+              console.log("carro editado com Sucesso!", "success");
+            } else {
+              console.log("Erro ao editar carro!", "error");
+            }
+            this.clear();
+            this.load();
+          });
+        }
       }
+    },
+    clear() {
+      this.$refs.form.reset();
+      this.exibirForm();
+    },
+    exibirForm() {
+      this.mostrarForm = !this.mostrarForm;
+    },
+    exibirExcluir() {
+      this.excluirMesmo = !this.excluirMesmo;
+    },
+    deletarCarro(carro) {
+      console.log(carro);
+      this.exibirExcluir();
+      API.deletarCarros(carro).then(response => {
+        if (response) {
+          console.log("Carro removido com Sucesso!", "success");
+          this.load();
+        } else {
+          console.log("Erro ao remover carro!", "error");
+        }
+      });
+    },
+    editarCarro(carro) {
+      this.carro = carro;
+      this.mostrarForm = true;
+    },
+    onFileSelected(event) {
+      console.log(event);
     }
+  },
+  data() {
+    return {
+      carro: {},
+      carros: [],
+      valid: true,
+      dialog: false,
+      mostrarForm: false,
+      excluirMesmo: false,
+      headers: [
+        {
+          text: "Modelo",
+          value: "modelo"
+        },
+        {
+          text: "Ano",
+          value: "ano"
+        },
+        {
+          text: "Combustivel",
+          value: "combustivel"
+        },
+        {
+          text: "Quilometragem",
+          value: "kilometragem"
+        },
+        {
+          text: "Cor",
+          value: "cor"
+        },
+        {
+          text: "Conservação",
+          value: "conservacao"
+        },
+        {
+          text: "Foto",
+          value: "foto"
+        },
+        {
+          text: "Ações",
+          value: ""
+        }
+      ],
+      nomeRules: [
+        v => !!v || "Nome é Obrigatório!",
+        v =>
+          (v && v.length <= 5000) || "Nome deve ter no máximo 1000 characters!"
+      ]
+    };
   }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

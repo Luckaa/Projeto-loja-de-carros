@@ -11,7 +11,7 @@
             <v-list-tile-title v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-      </v-list>
+      </v-list> 
     </v-navigation-drawer>
 
     <v-toolbar fixed app :clipped-left="clipped">
@@ -24,11 +24,13 @@
     </v-content>
 
   </v-app>
+ 
 </template>
 
 <script>
   import Vue from 'vue'
   export default {
+   
     data() {
       return {
         cordova: Vue.cordova,
@@ -44,11 +46,7 @@
             title: 'Adicionar Carro',
             name: 'carro'
           },
-            {
-            icon: 'add_circle_outline',
-            title: 'Adicionar Carro',
-            name: 'addcarro'
-          }
+     
         ],
 
         miniVariant: false,
